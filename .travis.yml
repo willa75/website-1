@@ -11,9 +11,15 @@ services:
   - redis-server
 install:
   - pip install -r requirements.txt
-script:
-  - flake8
-  - python manage.py test
+
+jobs:
+  include:
+    - stage: test
+      script: flake8
+    - script: python manage.py test
+#script:
+#  - flake8
+#  - python manage.py test
 matrix:
   allow_failures:
     - "3.7-dev"
