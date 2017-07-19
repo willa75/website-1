@@ -67,3 +67,12 @@ We maintain a collection of [ansible](https://www.ansible.com/) roles and playbo
     ansible-playbook -i ...  # TODO
 
 This will do the full server configuration and deployment, follow the roles for details :).
+
+## Running full stack in Docker
+
+The full stack can be run with the following command:
+
+```
+docker-compose -f docker-compose-fullstack.yml build
+docker-compose -f docker-compose-fullstack.yml up
+```

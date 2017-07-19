@@ -7,3 +7,5 @@ django
 celerybeat-schedule/
 
 .venv
+
+.idea

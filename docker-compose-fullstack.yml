@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  postgres:
+    image: postgres:9.6-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql
+
+  redis:
+    image: redis:3-alpine
+    ports:
+      - "6379:6379"
+
+  website:
+    image: pyslackers/website
+    build: .
+    ports:
+      - "8000:8000"
+    environment:
+      POSTGRES_HOST: postgres
+      REDIS_URL: redis://redis:6379
+
+  # Celery scheduler, this can only be 1 instance
+  # scheduler:
+  #   image:
+  #     context: .
+  #   command: celery -A website beat -l debug -S django
+
+  # Celery worker, this can scale out easily
+  # workers:
+  #   image:
+  #     context: .
+  #   command: celery -A website worker -l debug
+
+volumes:
+  pg_data:
+    driver: local
+
+networks:
+  default:
+    driver: bridge
